@@ -17,4 +17,43 @@ async function getUserById(req, res) {
   return res.status(200).json(theuser);
 }
 
-module.exports = { getAllUsers, getUserById };
+// Effacer l'user by id
+// localhost:3000/api/users/:id (delete)
+async function deleteUserById(req, res) {
+  const { id } = req.params;
+  await user.findByIdAndDelete(id);
+  return res.status(200).json({ message: "Success deletion" });
+}
+
+// creation l'user
+// localhost:3000/api/users (post)
+async function creationUser(req, res) {
+  const { firstname, lastname, birthday, age, isActive } = req.body;
+  await user.create({
+    firstname: firstname,
+    lastname: lastname,
+    birthday: birthday,
+    age: age,
+    isActive: isActive,
+  });
+  return res.status(201).json({ message: "user Added" });
+}
+
+//update user by id
+// localhost:3000/api/users/:id (put)
+async function updateUser(req, res) {
+  const { id } = req.params;
+  const { firstname, lastname, birthday, age, isActive } = req.body;
+  await user.findByIdAndUpdate(id, {
+    $set: { firstname, lastname, birthday, age, isActive },
+  });
+  return res.status(200).json({ message: "user updated" });
+}
+
+module.exports = {
+  getAllUsers,
+  getUserById,
+  deleteUserById,
+  creationUser,
+  updateUser,
+};
