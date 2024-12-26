@@ -39,7 +39,7 @@ async function creationUser(req, res) {
   return res.status(201).json({ message: "user Added" });
 }
 
-//update user by id
+// update user by id
 // localhost:3000/api/users/:id (put)
 async function updateUser(req, res) {
   const { id } = req.params;
